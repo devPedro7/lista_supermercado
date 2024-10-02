@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,6 +8,28 @@
 </head>
 <body>
     
+    <header>
+        <h2>App - Lista de Supermercado</h2>
+    </header>
+
+    <div class="lista-cadastro">
+        <input type="text" placeholder="insira o nome do produto..." name="nome_produto">
+        <input type="number" placeholder="insira o valor do produto" name="preco_produto">
+        <input type="submit" name="cadastro" value="Cadastrar">
+    </div>
+
+    <div class="lista-produtos">
+        <div class="lista-produtos-single">
+            <h3>Whey</h3>
+            <h3 class="preco"><span>R$ 20,00</span></h3>
+        </div>
+
+    <div class="soma-produto">
+        <h2>Soma dos produtos: <span>R$ 100,00</span></h2>
+    </div>
+
+    </div>
+
     <script src="./JS/index.js"></script>
 </body>
 </html>
