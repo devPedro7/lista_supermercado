@@ -3,7 +3,7 @@
 //QUANDO FOR CLICADO NO BOTÃO DE CADASTRAR, O EVENTO DE CLICK VAI PREENCHER A LISTA DE ITENS.
 
 //LISTA ONDE SERÁ PREENCHIDO OS ITENS
-let itens = []
+let itens = JSON.parse(localStorage.getItem("@listaSupermercado")) || []
 
 //AÇÃO DE CADASTRAR PRODUTO
 document.querySelector('input[type=submit]')
@@ -12,12 +12,18 @@ document.querySelector('input[type=submit]')
     let nomeProduto = document.querySelector('input[name = nome_produto]')
     let precoProduto = document.querySelector('input[name = preco_produto]')
 
+    //VALIDAÇÃO PARA NÃO INSERIR VAZIO
+     if(nomeProduto.value.trim() === "" || precoProduto.value.trim() === ""){
+         alert("Por favor, preencha todos os campos.");
+            return;
+        }
 
     //ADICIONAR OS VALORES NA LISTA
     itens.push({
         //CAPTURANDO E INSERINDO OS VALORES DOS INPUTS
         nome: nomeProduto.value,
         valor: precoProduto.value
+        
     })
     /*PRINTANDO O VALOR INSERIDO NO ARRAY teste
     alert(itens[0].nome)*/
@@ -40,6 +46,8 @@ document.querySelector('input[type=submit]')
                 <h3 class="preco"><span>R$ ${valor.valor}</span></h3>
             </div>    
         ` //OS NOMES NO TAMPLATE STRING SÃO DOS OBJETOS DA LISTA
+
+        salvarDados()
     })
 
     //RESETANDO OS VALORES DOS INPUTS APÓS CADASTRAR
@@ -50,11 +58,25 @@ document.querySelector('input[type=submit]')
     soma = soma.toFixed(2)
 
     //INSERINDO O VALOR DA SOMA NO HTML
-    let somaProdutos = document.querySelector('.soma-produto h2')
+    let somaProdutos = document.querySelector('.soma-produto span')
     somaProdutos.innerHTML =+ ` ${soma}`
+    
 })
 
+//FUNCIONALIDADE DE LIMPAR TODOS OS CAMPOS DA LISTA
+document.querySelector('.limpar-lista')
+.addEventListener('click', ()=>{
+    itens = [] //VOLTANDO O ARRAY DE INTENS PARA VAZIO
+    document.querySelector('.lista-produtos').innerHTML = "" //DEIXANDO A LISTA PARA VAZIO
+    document.querySelector('.soma-produto').innerHTML = "<h2>Soma dos produtos: R$ 0</h2>"
 
+    salvarDados()
+})
+
+//ARMAZENANDO DADOS NO NAVEGADOR: LOCALSTORAGE
+function salvarDados(){
+    localStorage.setItem("@listaSupermercado", JSON.stringify(itens))
+}
 
 /* pesca para criar layout
 

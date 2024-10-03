@@ -13,8 +13,8 @@
     </header>
 
     <div class="lista-cadastro">
-        <input type="text" placeholder="insira o nome do produto..." name="nome_produto">
-        <input type="number" placeholder="insira o valor do produto" name="preco_produto">
+        <input type="text" placeholder="insira o nome do produto..." name="nome_produto" required="true">
+        <input type="number" placeholder="insira o valor do produto..." name="preco_produto" required="true">
         <input type="submit" name="cadastro" value="Cadastrar">
     </div>
 
@@ -22,9 +22,10 @@
        
 
     <div class="soma-produto">
-        <h2>Soma dos produtos: <span>R$ 0</span></h2>
+        <h2>Soma dos produtos: R$<span> 0</span></h2>
     </div>
 
+    <button class="limpar-lista">Limpar lista</button>
 
 
     <script src="./JS/index.js"></script>

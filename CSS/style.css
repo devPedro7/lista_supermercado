@@ -84,3 +84,14 @@ header{
     background-color: #7a61ab;
     color: white;
 }
+
+.limpar-lista{
+    margin: 15px 20px;
+    padding: 10px;
+    background-color: #EE6B6E;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 15px;
+}
