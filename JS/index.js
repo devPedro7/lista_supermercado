@@ -47,7 +47,7 @@ document.querySelector('input[type=submit]')
             </div>    
         ` //OS NOMES NO TAMPLATE STRING SÃO DOS OBJETOS DA LISTA
 
-        salvarDados()
+        
     })
 
     //RESETANDO OS VALORES DOS INPUTS APÓS CADASTRAR
@@ -60,6 +60,8 @@ document.querySelector('input[type=submit]')
     //INSERINDO O VALOR DA SOMA NO HTML
     let somaProdutos = document.querySelector('.soma-produto span')
     somaProdutos.innerHTML =+ ` ${soma}`
+
+    salvarDados()
     
 })
 
