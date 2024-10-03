@@ -95,3 +95,71 @@ header{
     cursor: pointer;
     font-size: 15px;
 }
+
+
+/*RESPONSIVIDADE*/
+@media (max-width: 686px) {
+    
+    .lista-cadastro input[type=text]{
+        flex: 1;
+        font-size: 12px;
+    }
+
+    .lista-cadastro input[type=number]{
+        flex: 0.5;
+        font-size: 12px;
+    }
+
+}
+
+@media (max-width: 530px) {
+    
+    .lista-cadastro {
+        flex-direction: column;
+        font-size: 12px;
+    }
+
+    .lista-cadastro input{
+        border: none;
+        border-bottom: 1px solid black;
+        line-height: 20px;
+    }
+
+    .lista-cadastro input[type=number]{
+        margin: 10px 0px;
+        height: 20px;
+    }
+
+    .lista-cadastro input[type=submit]{
+        padding: 7px;
+    }
+
+    .soma-produto{
+        font-size: 10px;
+    }
+
+}
+
+@media (max-width: 427px) {
+    
+    header h2 {
+        font-size: 25px;
+    }
+
+    .soma-produto{
+        font-size: 10px;
+    }
+
+}
+
+@media (max-width: 344px) {
+    
+    header h2 {
+        font-size: 16px;
+    }
+
+    .soma-produto{
+        font-size: 8px;
+    }
+
+}
