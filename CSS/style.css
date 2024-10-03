@@ -125,9 +125,13 @@ header{
         line-height: 20px;
     }
 
+    .lista-cadastro input[type=text]{
+        height: 23px;
+    }
+
     .lista-cadastro input[type=number]{
         margin: 10px 0px;
-        height: 20px;
+        height: 23px;
     }
 
     .lista-cadastro input[type=submit]{
