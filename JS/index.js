@@ -40,7 +40,9 @@ function atualizarLista() {//FUNÇÃO QUE ATUALIZA A LISTA A CADA VALOR INSERIDO
         listaProdutos.innerHTML += `
             <div class="lista-produtos-single">
                 <h3>${valor.nome}</h3>
-                <h3 class="preco"><span>R$ ${valor.valor}</span></h3>
+                <h3 class="preco"><span>R$ ${valor.valor}</span>
+                    <button class="excluirItem"><img src="./ASSETS/excluir.png"></img></buton>
+                </h3>
             </div>
         `;//CRIANDO O TEMPLATE DA LISTA
     });
@@ -54,5 +56,27 @@ function salvarDados() {//FUNÇÃO QUE CRIA O LOCALSTORAGE
     localStorage.setItem("@listaSupermercado", JSON.stringify(itens));
 }
 
+//funcionalidade de excluir item
+    function excluirItem() {
+       
+  const itemPai = event.target.closest('.lista-produtos-single');
+  const itemId = itemPai.querySelector('h3').textContent; // Obtém o nome do item para identificar
+
+  const index = itens.findIndex(item => item.nome === itemId);
+
+    if (index !== -1) {//O -1 é quando ele encontra o elemento
+        itens.splice(index, 1); // Remove 1 elemento a partir do índice encontrado
+    }
+  
+  atualizarLista();
+  salvarDados();
+}
+
+// Adiciona o evento de clique a todos os botões de exclusão
+document.querySelector('.lista-produtos').addEventListener('click', (event) => {
+  if (event.target.classList.contains('excluirItem')) {
+    excluirItem(event);
+  }
+});
 // INICIA A LISTA AO CARREGAR A PÁGINA
 atualizarLista();

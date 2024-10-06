@@ -96,6 +96,17 @@ header{
     font-size: 15px;
 }
 
+.excluirItem{
+    padding: 9px;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+        img {
+            width: 20px;
+            
+        }   
+}
+
 
 /*RESPONSIVIDADE*/
 @media (max-width: 686px) {
