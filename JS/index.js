@@ -1,89 +1,82 @@
-//LÓGICA DA APLICAÇÃO
+let itens = JSON.parse(localStorage.getItem("@listaSupermercado")) || [] //localStorage PARA ARMAZENAR OS DADOS INSERIDOS NA LISTA DE ITENS
 
-//QUANDO FOR CLICADO NO BOTÃO DE CADASTRAR, O EVENTO DE CLICK VAI PREENCHER A LISTA DE ITENS.
-
-//LISTA ONDE SERÁ PREENCHIDO OS ITENS
-let itens = JSON.parse(localStorage.getItem("@listaSupermercado")) || []
-
-//AÇÃO DE CADASTRAR PRODUTO
 document.querySelector('input[type=submit]')
-.addEventListener('click', ()=>{
-    //CAPTURAR OS VALORES INSERIDOS NOS INPUTS
-    let nomeProduto = document.querySelector('input[name = nome_produto]')
-    let precoProduto = document.querySelector('input[name = preco_produto]')
+.addEventListener('click', ()=>{// QUANDO O BOTÃO DE CADASTRAR FOR CLICADO, SERÁ INSERIDO OS PRODUTOS
 
-    //VALIDAÇÃO PARA NÃO INSERIR VAZIO
-     if(nomeProduto.value.trim() === "" || precoProduto.value.trim() === ""){
-         alert("Por favor, preencha todos os campos.");
-            return;
-        }
+    let nomeProduto = document.querySelector('input[name=nome_produto]');//CRIANDO VARIÁVEIS PARA RECEBER OS VALORES DOS INPUTS
+    let precoProduto = document.querySelector('input[name=preco_produto]');//CRIANDO VARIÁVEIS PARA RECEBER OS VALORES DOS INPUTS
 
-    //ADICIONAR OS VALORES NA LISTA
-    itens.push({
-        //CAPTURANDO E INSERINDO OS VALORES DOS INPUTS
+    if (nomeProduto.value.trim() === "" || precoProduto.value.trim() === "") {//TRAVA/VALIDAÇÃO IMPEDINDO A INSERÇÃO DE VALORES NULOS
+        alert("Por favor, preencha todos os campos.");
+        return;
+    }
+
+    itens.push({//ADICIONANDO O QUE FOI DIGITADO NOS INPUTS NA LISTA DE ITENS 
         nome: nomeProduto.value,
         valor: precoProduto.value
-        
-    })
-    /*PRINTANDO O VALOR INSERIDO NO ARRAY teste
-    alert(itens[0].nome)*/
+    });
 
-    //CAPTURANDO div DO LISTA-PRODUTOS
-    let listaProdutos = document.querySelector('.lista-produtos')
-    let soma = 0 //VARIAVEL QUE VAI RECEBER O VALOR DA SOMA DOS PRODUTOS
+    atualizarLista();
+    salvarDados();
 
-    listaProdutos.innerHTML = "" //limpando o valor da lista pra não repetir cadastro 
+    nomeProduto.value = "";//LIMPANDO OS INPUTS 
+    precoProduto.value = "";//LIMPANDO OS INPUTS 
+});
 
+document.querySelector('.limpar-lista').addEventListener('click', () => {//FUNCIONALIDADE DE LIMPAR A LISTA QUANDO É CLICADO NO BOTÃO DE LIMPAR
+    itens = [];//ZERANDO A LISTA
+    localStorage.removeItem("@listaSupermercado");//FUNÇÃO DO JAVASCRIPT QUE LIMPA OS VALORES DO LOCALSTORAGE
+    atualizarLista();//ATUALIZANDO A LISTA DEPOIS QUE ELA É LIMPA
+});
 
-    //MAPEANDO OS VALORES DO ARRAY E RECUPERANDO SEU VALOR
-    itens.map((valor)=>{
+function atualizarLista() {//FUNÇÃO QUE ATUALIZA A LISTA A CADA VALOR INSERIDO
+    let listaProdutos = document.querySelector('.lista-produtos');
+    let soma = 0;
 
-        soma+= parseFloat(valor.valor) //A CADA VEZ QUE O LOOP REINICIAR, O VALOR DOS PRODUTOS SERÃO SOMADOS NA VARIÁVEL
-        listaProdutos.innerHTML +=`
+    listaProdutos.innerHTML = ""; //LIMPANDO A LISTA
 
-             <div class="lista-produtos-single">
+    itens.forEach((valor) => {//PERCORRENDO A LISTA
+        soma += parseFloat(valor.valor);//SOMANDO OS VALORES INSERINDO 
+        listaProdutos.innerHTML += `
+            <div class="lista-produtos-single">
                 <h3>${valor.nome}</h3>
-                <h3 class="preco"><span>R$ ${valor.valor}</span></h3>
-            </div>    
-        ` //OS NOMES NO TAMPLATE STRING SÃO DOS OBJETOS DA LISTA
+                <h3 class="preco"><span>R$ ${valor.valor}</span>
+                    <button class="excluirItem"><img src="./ASSETS/excluir.png"></img></buton>
+                </h3>
+            </div>
+        `;//CRIANDO O TEMPLATE DA LISTA
+    });
 
-        
-    })
-
-    //RESETANDO OS VALORES DOS INPUTS APÓS CADASTRAR
-    nomeProduto.value = ""
-    precoProduto.value = ""
-
-    //SETANDO AS CASAS DECIMAIS DA SOMA DOS PRODUTOS
-    soma = soma.toFixed(2)
-
-    //INSERINDO O VALOR DA SOMA NO HTML
-    let somaProdutos = document.querySelector('.soma-produto span')
-    somaProdutos.innerHTML =+ ` ${soma}`
-
-    salvarDados()
-    
-})
-
-//FUNCIONALIDADE DE LIMPAR TODOS OS CAMPOS DA LISTA
-document.querySelector('.limpar-lista')
-.addEventListener('click', ()=>{
-    itens = [] //VOLTANDO O ARRAY DE INTENS PARA VAZIO
-    document.querySelector('.lista-produtos').innerHTML = "" //DEIXANDO A LISTA PARA VAZIO
-    document.querySelector('.soma-produto').innerHTML = "<h2>Soma dos produtos: R$ 0</h2>"
-
-    salvarDados()
-})
-
-//ARMAZENANDO DADOS NO NAVEGADOR: LOCALSTORAGE
-function salvarDados(){
-    localStorage.setItem("@listaSupermercado", JSON.stringify(itens))
+    soma = soma.toFixed(2); //FIXANDO AS CASAS DECIMAIS PARA DUAS
+    let somaProdutos = document.querySelector('.soma-produto span');
+    somaProdutos.innerHTML = `${soma}`;
 }
 
-/* pesca para criar layout
+function salvarDados() {//FUNÇÃO QUE CRIA O LOCALSTORAGE
+    localStorage.setItem("@listaSupermercado", JSON.stringify(itens));
+}
 
-     <div class="lista-produtos-single">
-            <h3>Whey</h3>
-            <h3 class="preco"><span>R$ 20,00</span></h3>
-    </div>
-*/
+//funcionalidade de excluir item
+    function excluirItem() {
+       
+  const itemPai = event.target.closest('.lista-produtos-single');
+  const itemId = itemPai.querySelector('h3').textContent; // Obtém o nome do item para identificar
+
+  const index = itens.findIndex(item => item.nome === itemId);
+
+    if (index !== -1) {//O -1 é quando ele encontra o elemento
+        itens.splice(index, 1); // Remove 1 elemento a partir do índice encontrado
+    }
+  
+  atualizarLista();
+  salvarDados();
+}
+
+// Adiciona o evento de clique a todos os botões de exclusão
+document.querySelector('.lista-produtos').addEventListener('click', (event) => {
+  if (event.target.classList.contains('excluirItem')) {
+    excluirItem(event);
+  }
+});
+// INICIA A LISTA AO CARREGAR A PÁGINA
+atualizarLista();
